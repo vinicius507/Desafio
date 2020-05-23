@@ -18,7 +18,15 @@ const update = async (req, res) => {
     const updatedDocument = await Doc.updateOne({ _id: id }, {$set: document});
 
     res.send(updatedDocument);
-}
+};
+
+const index = async (req, res) => {
+    const id = req.headers.id;
+    const document = await Doc.findById(id);
+
+    res.send(document);
+};
 
 module.exports.store = store;
 module.exports.update = update;
+module.exports.index = index;

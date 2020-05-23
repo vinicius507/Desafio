@@ -11,6 +11,7 @@ export default function Frontpage({ history }) {
         const { _id } = res.data;
 
         localStorage.setItem('id', _id);
+        console.log(_id);
         history.push('/processing');
     }
 

@@ -9,9 +9,7 @@ function App() {
   return (
     <div className="container">
       <div className="content">
-        <a href="/">
-          <img src={Logo} />
-        </a>
+        <img src={Logo} alt="LedgerTec" />
         <Routes />
         <a
           className="support"
