@@ -4,17 +4,30 @@ import './Steps.css';
 
 export default function Steps({ state, setState }) {
 
-    const steps = [
+    let steps = [
         'Geração do documento iniciada...',
         'Documento gerado.',
         'Registro de documento iniciado...',
         'Documento registrado.',
-        // 'Revogação do documento iniciada...',
-        // 'Documento revogado.'
+        'Revogação do documento iniciada...',
+        'Documento revogado.'
     ];
 
+    const states = [
+        'generationStarted',
+        'generationFinished',
+        'registerStarted',
+        'registerFinished',
+        'revokeStarted',
+        'revokeFinished'
+    ]
+
+    if(!states.slice(5).includes(state)){
+        steps = steps.slice(0,4);
+    }
+
     function renderStep(step, i) {
-        if (state < i) {
+        if(states.slice(0,i).includes(state)){
             return (
                 <>
                     <span className="circle" id="future">
@@ -27,7 +40,7 @@ export default function Steps({ state, setState }) {
                     </p>
                 </>
             );
-        } else if (state === i) {
+        } else if(states[i] === state) {
             return (
                 <>
                     <span className="circle">

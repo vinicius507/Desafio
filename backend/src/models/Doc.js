@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 
 const DocSchema = new mongoose.Schema({
     state: {
-        type: Number,
-        required: true,
-        default: 1,
+        type: String,
     },
     dateCreated:{
         type: Date,
