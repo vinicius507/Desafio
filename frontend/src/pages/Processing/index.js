@@ -4,7 +4,7 @@ import './styles.css';
 
 import api from '../../services/api';
 
-import Machine from '../../components/Machine';
+import { stateMachine } from '../../components/Machine';
 import Steps from '../../components/Steps';
 import Log from '../../components/Log';
 
@@ -12,7 +12,7 @@ import docImg from '../../assets/document.png';
 
 export default function Processing() {
 
-    const [docState, send] = useMachine(Machine);
+    const [docState, send] = useMachine(stateMachine);
 
     function listener(i) {
         const events = [
@@ -45,7 +45,6 @@ export default function Processing() {
     }, [docState]);
 
 
-
     return (
         <>
             <div className="dashboard">
@@ -58,13 +57,13 @@ export default function Processing() {
                 </div>
             </div>
 
-            {docState.value === 'registerFinishedLimbo' ? (
+            {docState.value === 'registerFinished' ? (
                 <button id="revoke" onClick={() => send('REVOKE')}>
                     Revogar documento
                 </button>
             ) : (<></>)}
 
-            <Log />
+            <Log state={docState.value} />
 
         </>
     );

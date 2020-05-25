@@ -1,8 +1,9 @@
-import { Machine } from 'xstate';
+import { Machine, assign } from 'xstate';
 
-export default Machine({
+export const stateMachine = Machine({
     id: 'document',
     initial: 'generationStarted',
+    context: { regDone: 0 },
     states: {
         generationStarted: {
             after: {
@@ -32,6 +33,9 @@ export default Machine({
                 GEN_S: 'generationStarted',
                 GEN_F: 'generationFinished',
                 REG_S: 'registerStarted'
+            },
+            after: {
+                2000: assign((context) => context.regDone + 1)
             }
         },
         revokeStarted: {

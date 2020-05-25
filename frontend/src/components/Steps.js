@@ -1,46 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Steps.css';
 
 export default function Steps({ state, setState }) {
 
-    let steps = [
+    const [currentStep, setStep] = useState(0);
+
+    const steps = [
         'Geração do documento iniciada...',
         'Documento gerado.',
-        'Registro de documento iniciado...',
+        'Registro do documento iniciado...',
         'Documento registrado.',
-        'Revogação do documento iniciada...',
+        'Revogação iniciada...',
         'Documento revogado.'
     ];
 
-    const states = [
-        'generationStarted',
-        'generationFinished',
-        'registerStarted',
-        'registerFinished',
-        'revokeStarted',
-        'revokeFinished'
-    ]
-
-    if(!states.slice(5).includes(state)){
-        steps = steps.slice(0,4);
-    }
+    useEffect(() => {
+        setStep(currentStep => currentStep + 1);
+    }, [state]);
 
     function renderStep(step, i) {
-        if(states.slice(0,i).includes(state)){
+        if (i < currentStep) {
             return (
                 <>
-                    <span className="circle" id="future">
+                    <span className="circle"
+                        id="finished"
+                        onClick={() => {
+                            setState(i);
+                            setStep(i);
+                        }}>
                         <strong>
-                            {i + 1}
+                            ✔
                         </strong>
                     </span>
-                    <p id="future">
+                    <p>
                         {step}
                     </p>
                 </>
             );
-        } else if(states[i] === state) {
+        } else if (i === currentStep) {
             return (
                 <>
                     <span className="circle">
@@ -56,12 +54,12 @@ export default function Steps({ state, setState }) {
         } else {
             return (
                 <>
-                    <span className="circle" id="finished" onClick={() => setState(i)}>
+                    <span className="circle" id="future">
                         <strong>
-                            ✔
-                    </strong>
+                            {i + 1}
+                        </strong>
                     </span>
-                    <p>
+                    <p id="future">
                         {step}
                     </p>
                 </>
@@ -71,11 +69,20 @@ export default function Steps({ state, setState }) {
 
     return (
         <>
-            {steps.map((step, i) =>
-                <div className="step" key={i}>
-                    {renderStep(step, i)}
-                </div>
-            )}
+            {state === 'revokeStarted' || state === 'revokeFinished' ? (
+                steps.map((step, i) =>
+                    <div className="step" key={i}>
+                        {renderStep(step, i)}
+                    </div>
+                )
+            ) : (
+                    steps.slice(0,4).map((step, i) =>
+                        <div className="step" key={i}>
+                            {renderStep(step, i)}
+                        </div>
+                    )
+                )
+            }
         </>
     );
 }
