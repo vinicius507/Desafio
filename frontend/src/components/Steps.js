@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import './Steps.css';
 
 export default function Steps({ state, setState }) {
 
     const [currentStep, setStep] = useState(0);
+    const [showInitialSteps, setInitialSteps] = useState(true);
+    const [showFullSteps, setFullSteps] = useState(false);
 
     const steps = [
         'Geração do documento iniciada...',
@@ -17,6 +20,9 @@ export default function Steps({ state, setState }) {
 
     useEffect(() => {
         setStep(currentStep => currentStep + 1);
+        if (state === 'revokeStarted' || state === 'revokeFinished') {
+            setFullSteps(true);
+        }
     }, [state]);
 
     function renderStep(step, i) {
@@ -28,6 +34,7 @@ export default function Steps({ state, setState }) {
                         onClick={() => {
                             setState(i);
                             setStep(i);
+                            if (i < 4) { setFullSteps(false) };
                         }}>
                         <strong>
                             ✔
@@ -67,22 +74,42 @@ export default function Steps({ state, setState }) {
         }
     }
 
-    return (
-        <>
-            {state === 'revokeStarted' || state === 'revokeFinished' ? (
-                steps.map((step, i) =>
-                    <div className="step" key={i}>
-                        {renderStep(step, i)}
-                    </div>
-                )
-            ) : (
-                    steps.slice(0,4).map((step, i) =>
+    function RenderSteps() {
+        const nodeRef = useRef(null);
+
+        return (
+            <>
+                {showInitialSteps &&
+                    steps.slice(0, 4).map((step, i) =>
                         <div className="step" key={i}>
                             {renderStep(step, i)}
                         </div>
-                    )
-                )
-            }
+                    )}
+
+                <CSSTransition
+                    in={showFullSteps}
+                    timeout={300}
+                    classNames="fade"
+                    nodeRef={nodeRef}
+                    unmountOnExit
+                    onEnter={() => setInitialSteps(false)}
+                    onExited={() => setInitialSteps(true)}
+                >
+                    <div ref={nodeRef}>
+                        {steps.map((step, i) =>
+                            <div className="step" key={i}>
+                                {renderStep(step, i)}
+                            </div>
+                        )}
+                    </div>
+                </CSSTransition>
+            </>
+        );
+    }
+
+    return (
+        <>
+            {RenderSteps()}
         </>
     );
 }

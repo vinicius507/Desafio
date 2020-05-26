@@ -17,12 +17,33 @@
     align-self: center;
 }
 
-.content button#revoke {
+.content button.revoke {
     background-color: #d44b4b;
 }
 
-.content button#revoke:hover {
+.content button.revoke:hover {
     background-color: #c04444;
+}
+
+.content button.revoke-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.content button.revoke-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 200ms, transform 200ms;
+}
+
+.content button.revoke-exit {
+    opacity: 1;
+}
+
+.content button.revoke-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 200ms, transform 200ms;
 }
 
 .log {
@@ -40,7 +61,6 @@
 .log p {
     font-size: 12px;
     color: #555;
-    margin-bottom: 2px;
 }
 
 

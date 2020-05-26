@@ -7,7 +7,6 @@ import Logo from './assets/logo-ledger.png';
 
 function App() {
   return (
-    <div className="container">
       <div className="content">
         <img src={Logo} alt="LedgerTec" />
         <Routes />
@@ -18,7 +17,6 @@ function App() {
           Suporte
         </a>
       </div>
-    </div>
   );
 }
 

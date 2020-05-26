@@ -21,6 +21,10 @@ export default function Log({ state }) {
         setActions(log);
     }, [state]);
 
+    useEffect(()=>{
+        updateScroll();
+    })
+
     function renderLog(action) {
 
         return (
@@ -28,6 +32,11 @@ export default function Log({ state }) {
                 [{Object.keys(action)[0]}] {steps[action[Object.keys(action)[0]]]}
             </p>
         );
+    }
+
+    function updateScroll(){
+        var element = document.getElementById("style-1");
+        element.scrollTo(0, element.scrollHeight);
     }
 
     return (
