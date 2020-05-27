@@ -3,7 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import './Steps.css';
 
-export default function Steps({ state, setState }) {
+export default function Steps({ state, setState, setManual }) {
 
     const [currentStep, setStep] = useState(0);
     const [showInitialSteps, setInitialSteps] = useState(true);
@@ -34,6 +34,7 @@ export default function Steps({ state, setState }) {
                         onClick={() => {
                             setState(i);
                             setStep(i);
+                            setManual(true);
                             if (i < 4) { setFullSteps(false) };
                         }}>
                         <strong>

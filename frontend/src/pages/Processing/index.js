@@ -14,6 +14,7 @@ export default function Processing() {
 
     const [docState, send] = useMachine(stateMachine);
     const [showRevoke, setShowRevoke] = useState(false);
+    const [isManual, setManual] = useState(false);
 
     useEffect(() => {
         const docId = localStorage.getItem('id');
@@ -74,13 +75,13 @@ export default function Processing() {
                     <p className="doc-name">Doc.pdf</p>
                 </div>
                 <div className="steps">
-                    <Steps state={docState.value} setState={listener} />
+                    <Steps state={docState.value} setState={listener} setManual={setManual} />
                 </div>
             </div>
 
             {RevokeButton()}
 
-            <Log state={docState.value} />
+            <Log state={docState.value} isManual={isManual} setManual={setManual} />
 
         </>
     );

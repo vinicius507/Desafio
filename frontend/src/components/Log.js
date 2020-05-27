@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function Log({ state }) {
+export default function Log({ state, isManual, setManual }) {
 
     const [actions, setActions] = useState([]);
 
@@ -16,25 +16,33 @@ export default function Log({ state }) {
     useEffect(() => {
         let line = {};
         const time = new Date(Date.now()).toLocaleString("pt-BR");
-        line[`${time}`] = state;
+        line[`${time}`] = [state, isManual];
         const log = actions => actions.concat([line]);
         setActions(log);
+        setManual(false);
     }, [state]);
 
-    useEffect(()=>{
+    useEffect(() => {
         updateScroll();
     })
 
     function renderLog(action) {
 
         return (
-            <p>
-                [{Object.keys(action)[0]}] {steps[action[Object.keys(action)[0]]]}
-            </p>
+            <>
+                <p>
+                    {action[Object.keys(action)[0]][1] &&
+                        `[${Object.keys(action)[0]}] RETORNADO MANUALMENTE PARA ESTADO ANTERIOR:`
+                    }
+                </p>
+                <p>
+                    [{Object.keys(action)[0]}] {steps[action[Object.keys(action)[0]][0]]}
+                </p>
+            </>
         );
     }
 
-    function updateScroll(){
+    function updateScroll() {
         var element = document.getElementById("style-1");
         element.scrollTo(0, element.scrollHeight);
     }
@@ -45,7 +53,7 @@ export default function Log({ state }) {
                 {
                     actions.map((action, i) =>
                         <div key={i}>
-                            {renderLog(action, i)}
+                            {renderLog(action)}
                         </div>
                     )
                 }
