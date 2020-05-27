@@ -10,15 +10,15 @@ Depois, iniciar normalmente o frontend usando `yarn start` no diretório do fron
 
 Ao iniciar o processamento do documento, seu estado é alterado e demonstrado visualmente.
 
-![Iniciando Processamento](/GIFS/1.gif)
+![Iniciando Processamento.](/GIFS/1.gif)
 
 Ao terminar o registro do documento, é possível revogá-lo.
 
-![Revogando Documento](/GIFS/2.gif)
+![Revogando Documento.](/GIFS/2.gif)
 
 É possível retornar o documento a um estado anterior, clicando no seu índice.
 
-![Retornando Documento a um Estado Anterior](/GIFS/3.gif)
+![Retornando Documento a um Estado Anterior.](/GIFS/3.gif)
 
 ## Agredecimentos
 
